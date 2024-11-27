@@ -5,14 +5,18 @@ import { KeyPair } from './interface/main';
 import Web3 from 'web3';
 import { ENV } from '../Constant';
 
-const web3 = new Web3();
+const web3: Web3 = new Web3();
 
-
-const createStartKeyAndOnboarding = async (signer: any, env: ENV, token: 'USDC' | 'USDT', rpcUrl: string, version: 'v1' | 'v2' = 'v2') => {
-  if(!web3?.currentProvider){
+const createStartKeyAndOnboarding = async (
+  signer: any,
+  env: ENV,
+  token: 'USDC' | 'USDT',
+  rpcUrl: string,
+  version: 'v1' | 'v2' = 'v2',
+) => {
+  if (!web3?.currentProvider) {
     web3.setProvider(new Web3.providers.HttpProvider(rpcUrl));
   }
-  
 
   const account = signer.address;
   const chainId = env.networkId;
@@ -29,11 +33,17 @@ const createStartKeyAndOnboarding = async (signer: any, env: ENV, token: 'USDC' 
   }
 };
 
-const createStartKey = async (signer: any, env: ENV, token: 'USDC' | 'USDT', rpcUrl: string, version: 'v1' | 'v2' = 'v2') => {
-  if(!web3?.currentProvider){
+const createStartKey = async (
+  signer: any,
+  env: ENV,
+  token: 'USDC' | 'USDT',
+  rpcUrl: string,
+  version: 'v1' | 'v2' = 'v2',
+) => {
+  if (!web3?.currentProvider) {
     web3.setProvider(new Web3.providers.HttpProvider(rpcUrl));
   }
-  
+
   const account = signer.address;
   if (account) {
     const { key } = await genStarkKey(SigningMethod.Personal2, account, env);
@@ -43,7 +53,6 @@ const createStartKey = async (signer: any, env: ENV, token: 'USDC' | 'USDT', rpc
     throw new Error('Invalid Account');
   }
 };
-
 
 const getNonce = async (
   key: KeyPair,
@@ -88,14 +97,7 @@ const onboarding = async (
 
   if (status) {
     try {
-      const res: any = await onboardingFn(
-        env,
-        nonce,
-        SigningMethod.MetaMaskLatest,
-        _account,
-        key,
-        options.token,
-      );
+      const res: any = await onboardingFn(env, nonce, SigningMethod.MetaMaskLatest, _account, key, options.token);
 
       if (res.data) {
         return res.data;
@@ -125,7 +127,6 @@ const onboardingAccount = async ({
 }) => {
   const signer = await web3.eth.accounts.wallet.add(privateKey);
   web3.setProvider(new Web3.providers.HttpProvider(rpcUrl));
-
 
   const res = await createStartKeyAndOnboarding(signer, env, token, rpcUrl, version);
   return res;

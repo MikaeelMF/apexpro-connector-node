@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { SignOnboardingAction } from '../eth-signing';
 import { SigningMethod } from '../interface';
 import { KeyPair } from '../interface/main';
@@ -10,6 +11,6 @@ declare const genStarkKey: (signingMethod: SigningMethod, account: string, env: 
 declare const genNonce: (address: string, publicKey: string, env: ENV, params?: {
     [key: string]: any;
 }) => Promise<any>;
-declare const basicOnboarding: (env: ENV, nonce: string, signingMethod: SigningMethod, account: string, keyPair: KeyPair, token: "USDT" | "USDC") => Promise<import("axios").AxiosResponse<any, any>>;
-declare const simplifyOnboarding: (env: ENV, nonce: string, signingMethod: SigningMethod, account: string, keyPair: KeyPair, token: "USDT" | "USDC") => Promise<import("axios").AxiosResponse<any, any>>;
+declare const basicOnboarding: (env: ENV, nonce: string, signingMethod: SigningMethod, account: string, keyPair: KeyPair, token: "USDT" | "USDC") => Promise<axios.AxiosResponse<any, any>>;
+declare const simplifyOnboarding: (env: ENV, nonce: string, signingMethod: SigningMethod, account: string, keyPair: KeyPair, token: "USDT" | "USDC") => Promise<axios.AxiosResponse<any, any>>;
 export { basicOnboarding, simplifyOnboarding, genStarkKey, genNonce };

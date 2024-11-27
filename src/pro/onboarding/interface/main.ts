@@ -1,90 +1,104 @@
-import { HttpProvider, IpcProvider, WebsocketProvider } from "web3-core";
-import BigNumber from "bignumber.js";
+import type { HttpProvider } from 'web3-providers-http';
+import type { IpcProvider } from 'web3-providers-ipc';
+import BigNumber from 'bignumber.js';
+import { WebSocketProvider } from 'ethers/lib.commonjs';
+import Web3 from 'web3/lib/commonjs';
 
-export type { Account as EthereumAccount } from "web3-core";
+export type EthereumAccount = ReturnType<Web3['eth']['accounts']['create']>;
+
+// export interface EthereumAccount {
+//   address: string;
+//   privateKey: string;
+//   signTransaction: (
+//     tx: object,
+//     callback?: (error: Error, signedTransaction: object) => void
+//   ) => Promise<object>;
+//   sign: (data: string) => object;
+//   encrypt: (password: string) => object;
+// }
+
 export type BigNumberable = BigNumber | string | number;
-
 export enum ApexMarket {
-  BTC_USDT = "BTC-USDT",
-  BTC_USDC = "BTC-USDC",
-  BTC_USD = "BTC-USD",
-  ETH_USD = "ETH-USD",
-  ETH_USDC = "ETH-USDC",
-  LINK_USD = "LINK-USD",
-  AAVE_USD = "AAVE-USD",
-  UNI_USD = "UNI-USD",
-  SUSHI_USD = "SUSHI-USD",
-  SOL_USD = "SOL-USD",
-  YFI_USD = "YFI-USD",
-  ONEINCH_USD = "1INCH-USD",
-  AVAX_USD = "AVAX-USD",
-  SNX_USD = "SNX-USD",
-  CRV_USD = "CRV-USD",
-  UMA_USD = "UMA-USD",
-  DOT_USD = "DOT-USD",
-  DOGE_USD = "DOGE-USD",
-  MATIC_USD = "MATIC-USD",
-  MKR_USD = "MKR-USD",
-  FIL_USD = "FIL-USD",
-  ADA_USD = "ADA-USD",
-  ATOM_USD = "ATOM-USD",
-  COMP_USD = "COMP-USD",
-  BCH_USD = "BCH-USD",
-  LTC_USD = "LTC-USD",
-  EOS_USD = "EOS-USD",
-  ALGO_USD = "ALGO-USD",
-  ZRX_USD = "ZRX-USD",
-  XMR_USD = "XMR-USD",
-  ZEC_USD = "ZEC-USD",
-  ENJ_USD = "ENJ-USD",
-  ETC_USD = "ETC-USD",
-  XLM_USD = "XLM-USD",
-  TRX_USD = "TRX-USD",
-  XTZ_USD = "XTZ-USD",
-  HNT_USD = "HNT-USD",
+  BTC_USDT = 'BTC-USDT',
+  BTC_USDC = 'BTC-USDC',
+  BTC_USD = 'BTC-USD',
+  ETH_USD = 'ETH-USD',
+  ETH_USDC = 'ETH-USDC',
+  LINK_USD = 'LINK-USD',
+  AAVE_USD = 'AAVE-USD',
+  UNI_USD = 'UNI-USD',
+  SUSHI_USD = 'SUSHI-USD',
+  SOL_USD = 'SOL-USD',
+  YFI_USD = 'YFI-USD',
+  ONEINCH_USD = '1INCH-USD',
+  AVAX_USD = 'AVAX-USD',
+  SNX_USD = 'SNX-USD',
+  CRV_USD = 'CRV-USD',
+  UMA_USD = 'UMA-USD',
+  DOT_USD = 'DOT-USD',
+  DOGE_USD = 'DOGE-USD',
+  MATIC_USD = 'MATIC-USD',
+  MKR_USD = 'MKR-USD',
+  FIL_USD = 'FIL-USD',
+  ADA_USD = 'ADA-USD',
+  ATOM_USD = 'ATOM-USD',
+  COMP_USD = 'COMP-USD',
+  BCH_USD = 'BCH-USD',
+  LTC_USD = 'LTC-USD',
+  EOS_USD = 'EOS-USD',
+  ALGO_USD = 'ALGO-USD',
+  ZRX_USD = 'ZRX-USD',
+  XMR_USD = 'XMR-USD',
+  ZEC_USD = 'ZEC-USD',
+  ENJ_USD = 'ENJ-USD',
+  ETC_USD = 'ETC-USD',
+  XLM_USD = 'XLM-USD',
+  TRX_USD = 'TRX-USD',
+  XTZ_USD = 'XTZ-USD',
+  HNT_USD = 'HNT-USD',
 }
 export enum ApexAsset {
-  USDC = "USDC",
-  USDT = "USDT",
-  BTC = "BTC",
-  ETH = "ETH",
-  LINK = "LINK",
-  AAVE = "AAVE",
-  UNI = "UNI",
-  SUSHI = "SUSHI",
-  SOL = "SOL",
-  YFI = "YFI",
-  ONEINCH = "1INCH",
-  AVAX = "AVAX",
-  SNX = "SNX",
-  CRV = "CRV",
-  UMA = "UMA",
-  DOT = "DOT",
-  DOGE = "DOGE",
-  MATIC = "MATIC",
-  MKR = "MKR",
-  FIL = "FIL",
-  ADA = "ADA",
-  ATOM = "ATOM",
-  COMP = "COMP",
-  BCH = "BCH",
-  LTC = "LTC",
-  EOS = "EOS",
-  ALGO = "ALGO",
-  ZRX = "ZRX",
-  XMR = "XMR",
-  ZEC = "ZEC",
-  ENJ = "ENJ",
-  ETC = "ETC",
-  XLM = "XLM",
-  TRX = "TRX",
-  XTZ = "XTZ",
-  HNT = "HNT",
+  USDC = 'USDC',
+  USDT = 'USDT',
+  BTC = 'BTC',
+  ETH = 'ETH',
+  LINK = 'LINK',
+  AAVE = 'AAVE',
+  UNI = 'UNI',
+  SUSHI = 'SUSHI',
+  SOL = 'SOL',
+  YFI = 'YFI',
+  ONEINCH = '1INCH',
+  AVAX = 'AVAX',
+  SNX = 'SNX',
+  CRV = 'CRV',
+  UMA = 'UMA',
+  DOT = 'DOT',
+  DOGE = 'DOGE',
+  MATIC = 'MATIC',
+  MKR = 'MKR',
+  FIL = 'FIL',
+  ADA = 'ADA',
+  ATOM = 'ATOM',
+  COMP = 'COMP',
+  BCH = 'BCH',
+  LTC = 'LTC',
+  EOS = 'EOS',
+  ALGO = 'ALGO',
+  ZRX = 'ZRX',
+  XMR = 'XMR',
+  ZEC = 'ZEC',
+  ENJ = 'ENJ',
+  ETC = 'ETC',
+  XLM = 'XLM',
+  TRX = 'TRX',
+  XTZ = 'XTZ',
+  HNT = 'HNT',
 }
 
 export enum TransferAsset {
-  USDC = "USDC",
-  USDT = "USDT",
+  USDC = 'USDC',
+  USDT = 'USDT',
 }
 
 export type Market = ApexMarket;
@@ -97,15 +111,15 @@ interface ApiStarkwareSigned {
 }
 
 export enum SigningMethod {
-  Compatibility = "Compatibility", // picks intelligently between UnsafeHash and Hash
-  UnsafeHash = "UnsafeHash", // raw hash signed
-  Hash = "Hash", // hash prepended according to EIP-191
-  TypedData = "TypedData", // order hashed according to EIP-712
-  MetaMask = "MetaMask", // order hashed according to EIP-712 (MetaMask-only)
-  MetaMaskLatest = "MetaMaskLatest", // ... according to latest version of EIP-712 (MetaMask-only)
-  CoinbaseWallet = "CoinbaseWallet", // ... according to latest version of EIP-712 (CoinbaseWallet)
-  Personal = "Personal", // message signed with personal_sign
-  Personal2 = "Personal2", // message signed with personal_sign
+  Compatibility = 'Compatibility', // picks intelligently between UnsafeHash and Hash
+  UnsafeHash = 'UnsafeHash', // raw hash signed
+  Hash = 'Hash', // hash prepended according to EIP-191
+  TypedData = 'TypedData', // order hashed according to EIP-712
+  MetaMask = 'MetaMask', // order hashed according to EIP-712 (MetaMask-only)
+  MetaMaskLatest = 'MetaMaskLatest', // ... according to latest version of EIP-712 (MetaMask-only)
+  CoinbaseWallet = 'CoinbaseWallet', // ... according to latest version of EIP-712 (CoinbaseWallet)
+  Personal = 'Personal', // message signed with personal_sign
+  Personal2 = 'Personal2', // message signed with personal_sign
 }
 export enum SignatureTypes {
   NO_PREPEND = 0,
@@ -135,31 +149,31 @@ export interface EthPrivateAction {
 export type Address = string;
 
 export enum RequestMethod {
-  POST = "POST",
-  PUT = "PUT",
-  GET = "GET",
-  DELETE = "DELETE",
+  POST = 'POST',
+  PUT = 'PUT',
+  GET = 'GET',
+  DELETE = 'DELETE',
 }
 export enum AccountAction {
-  DEPOSIT = "DEPOSIT",
-  WITHDRAWAL = "WITHDRAWAL",
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
 }
 /**
  * @param LONG
  * @param SHORT
  * */
 export enum SideAction {
-  LONG = "LONG",
-  SHORT = "SHORT",
+  LONG = 'LONG',
+  SHORT = 'SHORT',
 }
 export enum AccountLeaderboardPnlPeriod {
-  DAILY = "DAILY",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-  ALL_TIME = "ALL_TIME",
-  COMPETITION = "COMPETITION",
-  DAILY_COMPETITION = "DAILY_COMPETITION",
-  LEAGUES = "LEAGUES",
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY',
+  ALL_TIME = 'ALL_TIME',
+  COMPETITION = 'COMPETITION',
+  DAILY_COMPETITION = 'DAILY_COMPETITION',
+  LEAGUES = 'LEAGUES',
 }
 
 export type ISO8601 = string | number;
@@ -179,26 +193,26 @@ export interface AccountLeaderboardPnlResponseObject {
   prizeWon: string | null;
 }
 export enum LeaderboardPnlPeriod {
-  DAILY = "DAILY",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-  ALL_TIME = "ALL_TIME",
-  COMPETITION = "COMPETITION",
-  DAILY_COMPETITION = "DAILY_COMPETITION",
-  BRONZE = "BRONZE",
-  SILVER = "SILVER",
-  GOLD = "GOLD",
-  PLATINUM = "PLATINUM",
-  DIAMOND = "DIAMOND",
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY',
+  ALL_TIME = 'ALL_TIME',
+  COMPETITION = 'COMPETITION',
+  DAILY_COMPETITION = 'DAILY_COMPETITION',
+  BRONZE = 'BRONZE',
+  SILVER = 'SILVER',
+  GOLD = 'GOLD',
+  PLATINUM = 'PLATINUM',
+  DIAMOND = 'DIAMOND',
 }
 
 export enum LeaguesExpectedOutcome {
-  PROMOTION = "PROMOTION",
-  DEMOTION = "DEMOTION",
-  SAME_LEAGUE = "SAME_LEAGUE",
+  PROMOTION = 'PROMOTION',
+  DEMOTION = 'DEMOTION',
+  SAME_LEAGUE = 'SAME_LEAGUE',
 
   // deprecated.
-  RELEGATION = "RELEGATION",
+  RELEGATION = 'RELEGATION',
 }
 
 export interface AccountResponseObject {
@@ -246,9 +260,9 @@ export interface PositionResponseObject {
 }
 
 export enum PositionStatus {
-  OPEN = "OPEN",
-  CLOSED = "CLOSED",
-  LIQUIDATED = "LIQUIDATED",
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+  LIQUIDATED = 'LIQUIDATED',
 }
 export interface ApiFastWithdrawalParams extends ApiFastWithdrawal {
   lpStarkKey: string;
@@ -306,7 +320,6 @@ export interface ApiOrder extends ApiStarkwareSigned {
   slTriggerPriceType?: string;
   slExpiration?: string;
   slSignature?: string;
-
 }
 
 export interface OrderSignatureOptions {
@@ -318,20 +331,20 @@ export interface OrderSignatureOptions {
   expiration: string;
 }
 export enum OrderSide {
-  BUY = "BUY",
-  SELL = "SELL",
+  BUY = 'BUY',
+  SELL = 'SELL',
 }
 export enum OrderType {
-  LIMIT_ORDER_WITH_FEES = "LIMIT_ORDER_WITH_FEES",
+  LIMIT_ORDER_WITH_FEES = 'LIMIT_ORDER_WITH_FEES',
 }
 interface ApiStarkwareSigned {
   signature: string;
   expiration: string;
 }
 export enum TimeInForce {
-  GTT = "GTT",
-  FOK = "FOK",
-  IOC = "IOC",
+  GTT = 'GTT',
+  FOK = 'FOK',
+  IOC = 'IOC',
 }
 export interface ApiTransfer extends ApiStarkwareSigned {
   amount: string;
@@ -422,21 +435,21 @@ export interface OrderResponseObject {
   cancelReason?: string | null;
 }
 export enum OrderStatus {
-  PENDING = "PENDING",
-  OPEN = "OPEN",
-  FILLED = "FILLED",
-  CANCELED = "CANCELED",
-  UNTRIGGERED = "UNTRIGGERED",
+  PENDING = 'PENDING',
+  OPEN = 'OPEN',
+  FILLED = 'FILLED',
+  CANCELED = 'CANCELED',
+  UNTRIGGERED = 'UNTRIGGERED',
 }
 export enum OrderRecordType {
-  OPEN = "openOrders",
-  HISTORY = "historyOrders",
-  FILLS = "fills",
-  PNL = "historicalPNL",
+  OPEN = 'openOrders',
+  HISTORY = 'historyOrders',
+  FILLS = 'fills',
+  PNL = 'historicalPNL',
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-export type Provider = HttpProvider | IpcProvider | WebsocketProvider;
+export type Provider = HttpProvider | IpcProvider | WebSocketProvider;
 export interface RetroactiveMiningRewardsResponseObject {
   epoch: number;
   epochStart: ISO8601;

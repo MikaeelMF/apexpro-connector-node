@@ -19,7 +19,8 @@ export function keyPairFromData(data: Buffer): KeyPairWithYCoordinate {
     throw new Error('keyPairFromData: Empty buffer');
   }
   const hashedData = keccak256(data);
-  const hashBN = hexToBn(hashedData.toString('hex'));
+  const hexString = Buffer.from(hashedData).toString('hex');
+  const hashBN = hexToBn(hexString);
   const privateKey = hashBN.iushrn(5).toString('hex'); // Remove the last five bits.
   return asSimpleKeyPair(asEcKeyPair(privateKey));
 }

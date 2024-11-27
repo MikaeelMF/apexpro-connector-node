@@ -1,6 +1,9 @@
-import { HttpProvider, IpcProvider, WebsocketProvider } from "web3-core";
-import BigNumber from "bignumber.js";
-export type { Account as EthereumAccount } from "web3-core";
+import type { HttpProvider } from 'web3-providers-http';
+import type { IpcProvider } from 'web3-providers-ipc';
+import BigNumber from 'bignumber.js';
+import { WebSocketProvider } from 'ethers/lib.commonjs';
+import Web3 from 'web3/lib/commonjs';
+export type EthereumAccount = ReturnType<Web3['eth']['accounts']['create']>;
 export type BigNumberable = BigNumber | string | number;
 export declare enum ApexMarket {
     BTC_USDT = "BTC-USDT",
@@ -409,7 +412,7 @@ export declare enum OrderRecordType {
     PNL = "historicalPNL"
 }
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-export type Provider = HttpProvider | IpcProvider | WebsocketProvider;
+export type Provider = HttpProvider | IpcProvider | WebSocketProvider;
 export interface RetroactiveMiningRewardsResponseObject {
     epoch: number;
     epochStart: ISO8601;
@@ -534,3 +537,4 @@ export interface ActiveOrderResponseObject {
     symbol: Market;
     side: OrderSide;
 }
+export {};

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { normalizeHex32 } from './lib';
 import { SyntheticAsset } from './types';
 import { getCurrency, ApexAsset, getPerpetual, getCurrencyV2 } from './main';
+import { hexToBn } from './lib/util';
 
 export const ALL_ASSETS = Object.values(ApexAsset);
 export const COLLATERAL_ASSET = ApexAsset.USDC;
@@ -54,7 +55,7 @@ export const ASSET_RESOLUTION: Record<ApexAsset, number> = {
 };
 
 export const COLLATERAL_ASSET_ID_BY_NETWORK_ID = () => {
-  const currentPerpetual = getPerpetual()?.toUpperCase?.()
+  const currentPerpetual = getPerpetual()?.toUpperCase?.();
   const currency = currentPerpetual ? getCurrencyV2() : getCurrency();
   let starkExAssetId = '';
   currency.map((item: any) => {
@@ -90,7 +91,8 @@ function makeCollateralAssetId(tokenAddress: string, quantization: number | stri
     Buffer.from(normalizeHex32(new BN(quantization).toString(16)), 'hex'),
   ]);
   const result = keccak256(data);
-  const resultBN = new BN(result.toString('hex'), 16);
+  const hexString = Buffer.from(result).toString('hex');
+  const resultBN = hexToBn(hexString);
   resultBN.imaskn(250);
   return `0x${normalizeHex32(resultBN.toString(16))}`;
 }

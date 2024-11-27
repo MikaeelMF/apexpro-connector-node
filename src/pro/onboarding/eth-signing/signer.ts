@@ -1,13 +1,18 @@
 import { promisify } from 'es6-promisify';
 import { ethers } from 'ethers';
 import Web3 from 'web3';
-import { AbstractProvider } from 'web3-core';
 import { JsonRpcPayload, JsonRpcResponse } from 'web3-core-helpers';
 
 import { SignatureTypes, SigningMethod } from '../interface/main';
 import { createTypedSignature, stripHexPrefix } from './helpers';
 import { web3 } from '..';
 import { ENV } from '../../Constant';
+
+interface AbstractProvider {
+  sendAsync?: (payload: JsonRpcPayload, callback: (error: Error | null, result?: JsonRpcResponse) => void) => void;
+  send?: (payload: JsonRpcPayload, callback: (error: Error | null, result?: JsonRpcResponse) => void) => void;
+  request?: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>;
+}
 
 export abstract class Signer {
   protected readonly web3: Web3;
@@ -97,7 +102,7 @@ export abstract class Signer {
   protected async ethSignPersonalInternal(
     signer: string,
     message: string,
-    env?: ENV
+    env?: ENV,
   ): Promise<{ value: string; l2KeyHash: string }> {
     let provider = this.web3.currentProvider as AbstractProvider & { request?: any };
 
@@ -121,7 +126,7 @@ export abstract class Signer {
       // const r = await web3.eth.personal.sign(msg, web3.eth.accounts.wallet.[0].address, '')
       if (web3.eth.accounts.wallet[0].privateKey) {
         const tempRes = await web3.eth.accounts.sign(msg, web3.eth.accounts.wallet[0].privateKey);
-        response = tempRes.signature
+        response = tempRes.signature;
       } else {
         response = await sendAsync({
           method: rpcMethod,
@@ -135,7 +140,7 @@ export abstract class Signer {
     }
 
     const signedMsg = response.result ? response.result : response;
-    const verifiedAddress = ethers.utils.verifyMessage(message, signedMsg);
+    const verifiedAddress = ethers.verifyMessage(message, signedMsg);
 
     const ifValid = verifiedAddress.toLowerCase() === signer.toLowerCase();
 
@@ -154,12 +159,10 @@ export abstract class Signer {
 
     const kL2KeyHash = env.isProd ? kL2KeyHashProd : kL2KeyHashTestnet;
 
-    const bytes = ethers.utils.toUtf8Bytes(message);
-    const personalSignMessageHash = ethers.utils.sha256(bytes);
+    const bytes = ethers.toUtf8Bytes(message);
+    const personalSignMessageHash = ethers.sha256(bytes);
 
-    if (
-      !ethers.BigNumber.from(personalSignMessageHash).eq(kL2KeyHash)
-    ) {
+    if (BigInt(personalSignMessageHash) !== BigInt(kL2KeyHash)) {
       throw new Error('personal_sign content hash mismatch');
     }
     // Note: Using createTypedSignature() fixes the signature `v` value.

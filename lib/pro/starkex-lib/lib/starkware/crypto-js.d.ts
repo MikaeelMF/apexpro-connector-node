@@ -9,7 +9,7 @@
 import BN from 'bn.js';
 import { ec as EllipticCurve } from 'elliptic';
 import { SignatureStruct } from '../../types';
-export declare const starkEc: any;
+export declare const starkEc: EllipticCurve;
 /**
  * Compute the pedersen hash of two inputs.
  */

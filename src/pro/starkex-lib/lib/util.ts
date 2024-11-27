@@ -51,7 +51,7 @@ export function factToCondition(factRegistryAddress: string, fact: string): stri
   const combinedBuffer: Buffer = Buffer.from(stripHexPrefix(combinedHex), 'hex');
 
   // Hash the data, mask by 250 bits, and return the hex string equivalent.
-  const hashedData: Buffer = keccak256(combinedBuffer);
+  const hashedData: Buffer = Buffer.from(keccak256(combinedBuffer));
   const hashBN = hexToBn(hashedData.toString('hex'));
   console.log('combinedHex', combinedHex);
   console.log('faceToCondition-normalizeHex32', normalizeHex32(fact));

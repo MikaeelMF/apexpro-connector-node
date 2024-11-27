@@ -56,7 +56,7 @@ export abstract class SignOffChainAction<M extends {}> extends Signer {
     signer: string,
     signingMethod: SigningMethod,
     message: M,
-    env: ENV
+    env: ENV,
   ): Promise<string | { value: string; l2KeyHash: string }> {
     // If the address is in the wallet, sign with it so we don't have to use the web3 provider.
     const walletAccount: EthereumAccount | undefined =
@@ -73,11 +73,12 @@ export abstract class SignOffChainAction<M extends {}> extends Signer {
           ? walletAccount.sign(hash).signature
           : await this.web3.eth.sign(hash, signer);
 
+          //@ts-ignore
         const hashSig = createTypedSignature(rawSignature, SignatureTypes.DECIMAL);
         if (signingMethod === SigningMethod.Hash) {
           return hashSig;
         }
-
+        //@ts-ignore
         const unsafeHashSig = createTypedSignature(rawSignature, SignatureTypes.NO_PREPEND);
         if (signingMethod === SigningMethod.UnsafeHash) {
           return unsafeHashSig;
@@ -94,7 +95,7 @@ export abstract class SignOffChainAction<M extends {}> extends Signer {
         // If the private key is available locally, sign locally without using web3.
         if (walletAccount.privateKey) {
           const wallet = new ethers.Wallet(walletAccount.privateKey);
-          const rawSignature = await wallet._signTypedData(
+          const rawSignature = await wallet.signTypedData(
             this.getDomainData(),
             { [this.domain]: this.actionStruct },
             message,

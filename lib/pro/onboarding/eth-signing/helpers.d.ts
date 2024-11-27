@@ -1,4 +1,4 @@
-import { Address } from "../interface/main";
+import { Address } from '../interface/main';
 /**
  * Ethereum signed message prefix without message length.
  */
