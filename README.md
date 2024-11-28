@@ -2,8 +2,10 @@
 # Installation
 
 ```
-yarn add apexpro-connector-node
-npm install apexpro-connector-node
+yarn add @mikaeelmf/apexpro-connector-node
+```
+```
+npm install @mikaeelmf/apexpro-connector-node
 ```
 
 
