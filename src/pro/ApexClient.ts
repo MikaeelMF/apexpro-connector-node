@@ -255,13 +255,13 @@ export class ApexClientV2 {
       accountStarkPublicKey = '0x' + accountStarkPublicKey;
     }
 
-    console.log('this.clientConfig', this.clientConfig);
+    // console.log('this.clientConfig', this.clientConfig);
     let publicKey = this.clientConfig.starkKeyPair.publicKey;
     if (!publicKey.startsWith('0x')) {
       publicKey = '0x' + publicKey;
     }
 
-    console.log('accountStarkPublicKey', accountStarkPublicKey, publicKey);
+    // console.log('accountStarkPublicKey', accountStarkPublicKey, publicKey);
     if (accountStarkPublicKey.toLowerCase() !== publicKey.toLowerCase()) {
       throw new Error('Stark Key is not match, please check your stark private key.');
     }

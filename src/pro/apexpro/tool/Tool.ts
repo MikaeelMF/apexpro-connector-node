@@ -81,7 +81,7 @@ export class TraceTool {
 
   public log(...args) {
     // tslint:disable-next-line:no-console
-    console.log(...args);
+    // console.log(...args);
   }
 
   public print(...args) {
