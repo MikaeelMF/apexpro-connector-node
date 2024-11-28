@@ -122,6 +122,6 @@ doc
 
 mochawesome-report
 
-lib
+#lib
 src/mock/index.local.ts
 /packages
