@@ -4,6 +4,7 @@
 ```
 yarn add @mikaeelmf/apexpro-connector-node
 ```
+OR
 ```
 npm install @mikaeelmf/apexpro-connector-node
 ```
