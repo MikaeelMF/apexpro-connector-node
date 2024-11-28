@@ -1,17 +1,19 @@
 {
-  "name": "apexpro-connector-node",
-  "version": "0.2.0-alpha.9",
+  "name": "@mikaeelmf/apexpro-connector-node",
+  "version": "0.3.2",
   "description": "ApexPro Connector Node.js SDK",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "lib/node-dist"
   ],
-  "repository": "https://github.com/ApeX-Protocol/apexpro-connector-node",
+  "repository": "https://github.com/MikaeelMF/apexpro-connector-node",
   "authors": [
     "lihang941",
-    "RoderickIsWatching"
+    "RoderickIsWatching",
+    "MikaeelMF"
   ],
   "scripts": {
     "test": "mocha test/**.spec.ts",
@@ -20,13 +22,13 @@
     "test:omni": "mocha test/omni/**.spec.ts",
     "test:omniPrivate": "mocha test/omni/private.spec.ts",
     "clean": "rimraf dist lib lib.esm lib.umd cache artifacts out docs",
-    "build": "pnpm run clean && pnpm run build:cjs ",
     "build:cjs": "tsc -p tsconfig.cjs.json --diagnostics",
     "build:umd": "webpack",
     "format": "prettier --write \"(src|test)/**/*.ts\"",
     "lint": "tslint -p tsconfig.json --fix",
     "doc": "typedoc --excludeExternals --excludePrivate --out docs ./src/**",
-    "publish:npm": "pnpm run clean && pnpm run build && pnpm publish && pnpm run clean"
+    "build": "pnpm run clean && pnpm run build:cjs && pnpm run copy:node-dist",
+    "copy:node-dist": "cp -R src/packages/node-dist lib/"
   },
   "license": "MIT",
   "devDependencies": {
@@ -95,5 +97,8 @@
       "reportFilename": "apexpro-connector-node"
     },
     "extension": "ts"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
