@@ -1,6 +1,6 @@
 {
   "name": "@mikaeelmf/apexpro-connector-node",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "ApexPro Connector Node.js SDK",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -28,7 +28,7 @@
     "lint": "tslint -p tsconfig.json --fix",
     "doc": "typedoc --excludeExternals --excludePrivate --out docs ./src/**",
     "build": "pnpm run clean && pnpm run build:cjs && pnpm run copy:node-dist",
-    "copy:node-dist": "cp -R src/packages/node-dist lib/"
+    "copy:node-dist": "cp -R src/packages/node-dist lib/packages/node-dist"
   },
   "license": "MIT",
   "devDependencies": {
